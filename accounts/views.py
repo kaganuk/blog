@@ -30,7 +30,7 @@ def login_view(request):
 
 
 @require_GET
-@login_required()
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('post:list')

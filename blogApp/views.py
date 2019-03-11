@@ -10,7 +10,7 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
-@login_required(login_url='/accounts/login')
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -30,7 +30,7 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
-@login_required(login_url='/accounts/login')
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
