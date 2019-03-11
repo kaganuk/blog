@@ -9,11 +9,13 @@
     </head>
     <body>
         <div class="page-header">
-            <form action="{% url 'accounts:logout'%}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="logout" class="top-menu">
-            </form>
+            {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}" class="top-menu">logout</a>
             <a href="{% url 'post:new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="top-menu">login</a>
+                <a href="{% url 'accounts:signup' %}" class="top-menu">signup</a>
+            {% endif %}
             <h1><a href="/">Django Blog</a></h1>
         </div>
         <div class="content container">
