@@ -9,10 +9,13 @@
     </head>
     <body>
         <div class="page-header">
+            <form action="{% url 'accounts:logout'%}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="logout" class="top-menu">
+            </form>
             <a href="{% url 'post:new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             <h1><a href="/">Django Blog</a></h1>
         </div>
-
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
