@@ -6,6 +6,7 @@ from django.views.decorators.http import require_GET
 
 
 def signup_view(request):
+    """A view for unregistered users."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -18,6 +19,7 @@ def signup_view(request):
 
 
 def login_view(request):
+    """A view for registered users to login."""
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -32,5 +34,6 @@ def login_view(request):
 @require_GET
 @login_required
 def logout_view(request):
+    """A view for logged in users to logout."""
     logout(request)
     return redirect('post:list')
