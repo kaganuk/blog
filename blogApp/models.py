@@ -4,28 +4,15 @@ from django.utils import timezone
 from django.db.models import Q
 
 
-class PostQuerySet(models.QuerySet):
-    def posts(self):
-        """Returns posts queryset."""
-        return self.filter(Q(publish_date__lte=timezone.now()) & Q(archive_date__isnull=True)).order_by('publish_date')
-
-    def archived_posts(self):
-        """Returns archived posts queryset."""
-        return self.filter(archive_date__isnull=False).order_by('archive_date')
-
-
 class PostManager(models.Manager):
-    def get_queryset(self):
-        """Returns PostQuerySet."""
-        return PostQuerySet(self.model, using=self._db)
-
     def posts(self):
-        """Returns posts with PostQuerySet."""
-        return self.get_queryset().posts()
+        """Returns posts ordered by publish_date"""
+        condition = Q(publish_date__lte=timezone.now()) & Q(archive_date__isnull=True)
+        return self.get_queryset().filter(condition).order_by('publish_date')
 
     def archived_posts(self):
-        """Returns archived posts with PostQuerySet."""
-        return self.get_queryset().archived_posts()
+        """Returns archived posts ordered by archive_date"""
+        return self.get_queryset().filter(archive_date__isnull=False).order_by('archive_date')
 
 
 class Post(models.Model):
