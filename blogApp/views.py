@@ -58,7 +58,7 @@ def post_edit(request, pk):
 
 
 @require_GET
-def post_archive(request, pk):
+def archive_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.archive()
     return redirect('post:archived_list')
