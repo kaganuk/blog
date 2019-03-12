@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 def post_list(request):
     """A list page for posts."""
-    posts = Post.objects.filter(publish_date__lte=timezone.now()).order_by('publish_date')
+    posts = Post.objects.posts()
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
