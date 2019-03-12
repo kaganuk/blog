@@ -3,11 +3,18 @@ from django.utils import timezone
 from .forms import PostForm
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 
 
 def post_list(request):
     """A list page for posts."""
     posts = Post.objects.posts()
+    return render(request, 'blog/post_list.html', {'posts': posts})
+
+
+def archived_post_list(request):
+    """A list page for archived posts."""
+    posts = Post.objects.archived_posts()
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
@@ -48,3 +55,10 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+@require_GET
+def post_archive(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.archive()
+    return redirect('post:archived_list')
