@@ -14,6 +14,10 @@ class PostManager(models.Manager):
         """Returns archived posts ordered by archive_date"""
         return self.get_queryset().filter(archive_date__isnull=False).order_by('archive_date')
 
+    def search_posts(self, text):
+        condition = Q(text__contains=text) | Q(title__contains=text)
+        return self.get_queryset().filter(condition)
+
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

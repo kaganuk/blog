@@ -62,3 +62,10 @@ def archive_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.archive()
     return redirect('post:archived_list')
+
+
+@require_GET
+def search_post(request):
+    text = request.GET['text']
+    posts = Post.objects.search_posts(text=text)
+    return render(request, 'blog/search_post_list.html', {'posts': posts})
