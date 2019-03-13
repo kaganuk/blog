@@ -12,8 +12,12 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
-def archived_post_list(request):
-    """A list page for archived posts."""
+def archive_post(request):
+    """A list page for archived posts or archives posts."""
+    if request.method == 'POST':
+        pk = request.POST['pk']
+        post = get_object_or_404(Post, pk=pk)
+        post.archive()
     posts = Post.objects.archived_posts()
     return render(request, 'blog/post_list.html', {'posts': posts})
 
@@ -55,13 +59,6 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
-
-
-@require_GET
-def archive_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.archive()
-    return redirect('post:archived_list')
 
 
 @require_GET
