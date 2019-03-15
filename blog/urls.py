@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
     url('', include('blogApp.urls')),
     url(r'^api/', include('blogApp.api.urls')),
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^accounts/', include('accounts.urls')),
-]
+)

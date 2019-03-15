@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static i18n %}
 
 {% block content %}
     {% for post in posts %}
@@ -6,7 +7,7 @@
             <div class="date">
                 {{ post.publish_date }}
             </div>
-            <h1><a href="{% url 'post:detail' pk=post.pk %}">{{ post.title }} {% if post.is_archived %} (Archived) {% endif %}</a></h1>
+            <h1><a href="{% url 'post:detail' pk=post.pk %}">{{ post.title }} {% if post.is_archived %} ({% trans "Archived" %}) {% endif %}</a></h1>
             <p>{{ post.text|linebreaksbr }}</p>
         </div>
     {% endfor %}
